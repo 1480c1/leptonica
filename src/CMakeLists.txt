@@ -17,14 +17,19 @@ endif()
 string(REPLACE "-O3" "-O2" CMAKE_C_FLAGS_RELEASE ${CMAKE_C_FLAGS_RELEASE})
 
 add_library                     (leptonica ${src} ${hdr})
-set_target_properties           (leptonica PROPERTIES VERSION   ${VERSION_PLAIN})
-set_target_properties           (leptonica PROPERTIES SOVERSION 5.3.0)
-if (MSVC)
-set_target_properties           (leptonica PROPERTIES OUTPUT_NAME       leptonica-${VERSION_PLAIN})
-set_target_properties           (leptonica PROPERTIES DEBUG_OUTPUT_NAME leptonica-${VERSION_PLAIN}d)
+set_target_properties           (leptonica PROPERTIES VERSION   ${VERSION_PLAIN}
+                                                      SOVERSION 5.3.0)
+if(USE_OLD_LIB_NAME)
+    set_target_properties       (leptonica PROPERTIES OUTPUT_NAME       lept
+                                                      DEBUG_OUTPUT_NAME leptd)
 else()
-set_target_properties           (leptonica PROPERTIES OUTPUT_NAME       leptonica)
-set_target_properties           (leptonica PROPERTIES DEBUG_OUTPUT_NAME leptonica)
+    if (MSVC)
+        set_target_properties   (leptonica PROPERTIES OUTPUT_NAME       leptonica-${VERSION_PLAIN}
+                                                      DEBUG_OUTPUT_NAME leptonica-${VERSION_PLAIN}d)
+    else()
+        set_target_properties   (leptonica PROPERTIES OUTPUT_NAME       leptonica
+                                                      DEBUG_OUTPUT_NAME leptonica)
+    endif()
 endif()
 
 if (BUILD_SHARED_LIBS)

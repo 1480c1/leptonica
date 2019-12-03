@@ -56,6 +56,7 @@ endif()
 if(UNIX)
     option(SYM_LINK "Create symlink leptonica -> lept on UNIX" OFF)
 endif()
+option(USE_OLD_LIB_NAME "Use lept instead of leptonica for library name" OFF)
 
 if(NOT SW_BUILD)
     find_package(GIF)
